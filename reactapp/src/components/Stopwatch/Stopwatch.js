@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
+
 const Stopwatch = () => {
-  // state to track the elapsed time
   const [disable, setDisable] = useState(true);
   const [visible, setVisible] = useState(true);
-  const removeVisible = ()=>{
-    setVisible((prev)=>!prev);
-  }
-  const removeDisable= ()=>{
+  
+  const removeVisible = () => {
+    setVisible((prev) => !prev);
+  };
+  
+  const removeDisable = () => {
     setDisable(false);
-  }
+  };
 
   const [time, setTime] = useState(0);
-  // state to track whether the stopwatch is running
   const [isRunning, setIsRunning] = useState(false);
 
   useEffect(() => {
@@ -42,7 +43,8 @@ const Stopwatch = () => {
 
   const handleReset = () => {
     setTime(0);
-    removeVisible();
+    setVisible(true); // Reset the visibility state
+    setDisable(true); // Disable the Reset button again
     setIsRunning(false);
   };
 
@@ -56,36 +58,37 @@ const Stopwatch = () => {
   };
 
   return (
-    <div className = "watch_container">
+    <div className="watch_container">
       <h1>React Stopwatch</h1>
-      {/* display the elapsed time */}
-      <p data-testid="time" className="timefont">{formattedTime()}</p>
-      <div className = "button_con">
-      {/* start button */}
-        {visible &&(
-            <button data-testid="start" onClick={handleStart}>
-              Start
-            </button>
+      <p data-testid="time" className="timefont">
+        {formattedTime()}
+      </p>
+      <div className="button_con">
+        {visible && (
+          <button data-testid="start" onClick={handleStart}>
+            Start
+          </button>
         )}
-        {/* pause button */}
-      {isRunning && (
-        <button data-testid="pause" onClick={handlePause}>
-          Pause
-        </button>
-      )}
-      {/* resume button */}
-      {!isRunning && time !== 0 && (
-        <button data-testid="resume" onClick={handleResume}>
-          Resume
-        </button>
-      )}
-      { (
-        <button data-testid="reset" onClick={handleReset} disabled={disable}>
+        {isRunning && (
+          <button data-testid="pause" onClick={handlePause}>
+            Pause
+          </button>
+        )}
+        {!isRunning && time !== 0 && (
+          <button data-testid="resume" onClick={handleResume}>
+            Resume
+          </button>
+        )}
+        {(
+          <button
+            data-testid="reset"
+            onClick={handleReset}
+            disabled={disable}
+          >
             Reset
-        </button>
-      )}
-
-        </div>
+          </button>
+        )}
+      </div>
     </div>
   );
 };
